@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import { embedMany } from "ai";
-import { embeddingModel } from "./provider.js";
+import { embeddingModel, embeddingProviderOptions } from "./provider.js";
 import { db, client } from "./db/index.js";
 import { embeddings } from "./db/schema.js";
 
@@ -48,7 +48,7 @@ async function main() {
     const chunks = chunk(text);
     console.log(`  ${chunks.length} chunks`);
 
-    const { embeddings: vectors } = await embedMany({ model, values: chunks });
+    const { embeddings: vectors } = await embedMany({ model, values: chunks, providerOptions: embeddingProviderOptions });
 
     const rows = chunks.map((content, i) => ({
       content,

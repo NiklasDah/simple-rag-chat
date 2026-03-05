@@ -1,7 +1,7 @@
 import { embed, tool } from "ai";
 import { cosineDistance, desc, gt, sql } from "drizzle-orm";
 import { z } from "zod";
-import { embeddingModel } from "./provider.js";
+import { embeddingModel, embeddingProviderOptions } from "./provider.js";
 import { db } from "./db/index.js";
 import { embeddings } from "./db/schema.js";
 
@@ -16,7 +16,7 @@ export const getInformation = tool({
     query: z.string().describe("The search query"),
   }),
   execute: async ({ query }) => {
-    const { embedding: vec } = await embed({ model: embedding, value: query });
+    const { embedding: vec } = await embed({ model: embedding, value: query, providerOptions: embeddingProviderOptions });
     const similarity = sql<number>`1 - (${cosineDistance(embeddings.embedding, vec)})`;
 
     const results = await db

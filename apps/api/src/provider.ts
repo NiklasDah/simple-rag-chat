@@ -23,3 +23,11 @@ export const chatModel = (model: string) =>
 
 export const embeddingModel = (model: string) =>
   azure ? azure.embedding(model) : openai!.embeddingModel(model);
+
+const dim = process.env.EMBEDDING_DIMENSIONS
+  ? parseInt(process.env.EMBEDDING_DIMENSIONS)
+  : undefined;
+
+export const embeddingProviderOptions = dim
+  ? { openaiCompatible: { dimensions: dim } }
+  : undefined;

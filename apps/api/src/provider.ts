@@ -30,6 +30,6 @@ const dim = process.env.EMBEDDING_DIMENSIONS
 
 export const embeddingProviderOptions = dim
   ? isAzure
-    ? { azure: { dimensions: dim } }
+    ? { openai: { dimensions: dim } }
     : { openaiCompatible: { dimensions: dim } }
   : undefined;

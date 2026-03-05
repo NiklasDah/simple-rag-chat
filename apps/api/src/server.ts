@@ -1,5 +1,5 @@
 import { streamText, stepCountIs, convertToModelMessages } from "ai";
-import { provider } from "./provider.js";
+import { chatModel } from "./provider.js";
 import { getInformation } from "./rag.js";
 
 const corsHeaders: Record<string, string> = {
@@ -21,7 +21,7 @@ const server = Bun.serve({
       const { messages } = await req.json();
 
       const result = streamText({
-        model: provider.chatModel(process.env.CHAT_MODEL || "llama3.2"),
+        model: chatModel(process.env.CHAT_MODEL || "llama3.2"),
         system:
           "You are a helpful assistant. Use the getInformation tool to search the knowledge base before answering questions. Base your answers on the retrieved information.",
         messages: await convertToModelMessages(messages),

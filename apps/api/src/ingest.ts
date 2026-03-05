@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import { embedMany } from "ai";
-import { provider } from "./provider.js";
+import { embeddingModel } from "./provider.js";
 import { db, client } from "./db/index.js";
 import { embeddings } from "./db/schema.js";
 
@@ -38,7 +38,7 @@ async function main() {
     process.exit(0);
   }
 
-  const model = provider.embeddingModel(
+  const model = embeddingModel(
     process.env.EMBEDDING_MODEL || "nomic-embed-text"
   );
 

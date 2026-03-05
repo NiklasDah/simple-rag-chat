@@ -2,11 +2,19 @@ import { createAzure } from "@ai-sdk/azure";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 
 const isAzure = process.env.AI_PROVIDER === "azure";
+const proxyUrl =
+  process.env.HTTPS_PROXY || process.env.HTTP_PROXY || process.env.https_proxy || process.env.http_proxy;
+
+const proxyFetch = proxyUrl
+  ? (((url: RequestInfo | URL, init?: RequestInit) =>
+      fetch(url, { ...init, proxy: proxyUrl } as any)) as typeof globalThis.fetch)
+  : undefined;
 
 const azure = isAzure
   ? createAzure({
       resourceName: process.env.AZURE_RESOURCE_NAME!,
       apiKey: process.env.AZURE_API_KEY!,
+      fetch: proxyFetch,
     })
   : null;
 
@@ -15,6 +23,7 @@ const openai = !isAzure
       name: "provider",
       baseURL: process.env.AI_BASE_URL!,
       apiKey: process.env.AI_API_KEY,
+      fetch: proxyFetch,
     })
   : null;
 

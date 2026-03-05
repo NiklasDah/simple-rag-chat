@@ -1,9 +1,12 @@
+import { relative, resolve } from "node:path";
 import { defineConfig } from "drizzle-kit";
+
+const root = __dirname;
 
 export default defineConfig({
   dialect: "postgresql",
-  schema: "./apps/api/src/db/schema.ts",
-  out: "./drizzle",
+  schema: resolve(root, "apps/api/src/db/schema.ts"),
+  out: relative(process.cwd(), resolve(root, "drizzle")),
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },

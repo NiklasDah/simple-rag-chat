@@ -28,7 +28,7 @@ async function extractText(filePath: string): Promise<string> {
 }
 
 async function main() {
-  const docsDir = join(import.meta.dirname, "../documents");
+  const docsDir = join(import.meta.dirname, "../../../documents");
   const files = readdirSync(docsDir).filter(
     (f) => f.endsWith(".pdf") || f.endsWith(".txt")
   );

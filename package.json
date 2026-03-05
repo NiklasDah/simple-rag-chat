@@ -10,6 +10,7 @@
     "db:migrate": "pnpm --filter @simple-rag-chat/api db:migrate"
   },
   "devDependencies": {
+    "dotenv": "^17.3.1",
     "turbo": "^2"
   },
   "packageManager": "pnpm@10.5.2"
